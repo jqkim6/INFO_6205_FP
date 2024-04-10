@@ -11,20 +11,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-public class FirstAddActivity extends AppCompatActivity {
+public class SecondAddActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_add);
-
-        Button button1 = (Button) findViewById(R.id.nextButton);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_second_add);
+        Button button1 = (Button) findViewById(R.id.finishButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FirstAddActivity.this, SecondAddActivity.class);
+                Intent intent = new Intent(SecondAddActivity.this, FirstAddActivity.class);
                 startActivity(intent);
             }
         });
