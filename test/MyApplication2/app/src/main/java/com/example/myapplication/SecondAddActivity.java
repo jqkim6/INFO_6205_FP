@@ -22,7 +22,7 @@ public class SecondAddActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SecondAddActivity.this, FirstAddActivity.class);
+                Intent intent = new Intent(SecondAddActivity.this, FirstActivity.class);
                 startActivity(intent);
             }
         });
