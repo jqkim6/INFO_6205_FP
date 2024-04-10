@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_layout);
-        Button button1 = (Button)findViewById(R.id.floatingActionButton);
+        FloatingActionButton button1 = findViewById(R.id.floatingActionButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
