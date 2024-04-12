@@ -31,13 +31,9 @@ public class FirstAddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ArrayList<String> taskitem=new ArrayList<>();
                 String title=((TextInputEditText)findViewById(R.id.textInputTitle)).getText().toString();
-                Log.d("a",title);
                 String category=((TextInputEditText)findViewById(R.id.textInputCategory)).getText().toString();
-                Log.d("b",category);
                 String deadline=((TextInputEditText)findViewById(R.id.textInputDeadline)).getText().toString();
-                Log.d("c",deadline);
                 String workload=((TextInputEditText)findViewById(R.id.textInputWorkload)).getText().toString();
-                Log.d("d",workload);
                 taskitem.add(title);
                 taskitem.add(category);
                 taskitem.add(deadline);

@@ -11,6 +11,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.util.ArrayList;
 
 public class SecondAddActivity extends AppCompatActivity {
@@ -25,9 +27,10 @@ public class SecondAddActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String content=((TextInputEditText)findViewById(R.id.textInputContent)).getText().toString();
                 ToDoItem newitem=new ToDoItem();
                 //设置新item内容
-
+                newitem.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
                 //
                 ToDoAdapter.getInstance().addTask(newitem);
                 Intent intent = new Intent(SecondAddActivity.this, FirstActivity.class);

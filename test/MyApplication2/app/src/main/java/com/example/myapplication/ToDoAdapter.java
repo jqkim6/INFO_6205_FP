@@ -39,7 +39,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         // - 获取元素数据
         ToDoItem item = toDoItems.get(position);
         // - 用该元素的数据替换视图的内容
-        holder.textView.setText(item.getText());
+        holder.textView.setText(item.getTitle());
         // 这里你可以设置更多视图的属性，如点击事件监听器等
         holder.itemView.setOnLongClickListener(v -> {
             // 显示删除按钮
