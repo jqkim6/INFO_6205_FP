@@ -34,15 +34,7 @@ public class FirstActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 初始化待办事项数据列表
-        toDoList = new ArrayList<>();
-        // 添加一些数据到列表中
-        toDoList.add(new ToDoItem());
-        toDoList.add(new ToDoItem());
-        toDoList.add(new ToDoItem());
-
-        // 初始化 Adapter 并设置给 RecyclerView
-        adapter = new ToDoAdapter(toDoList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(ToDoAdapter.getInstance());
 
     }
 
