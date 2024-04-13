@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
+
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class SecondAddActivity extends AppCompatActivity {
@@ -28,6 +32,8 @@ public class SecondAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String content=((TextInputEditText)findViewById(R.id.textInputContent)).getText().toString();
+                curtask.add(content);
+                save(curtask);
                 ToDoItem newitem=new ToDoItem();
                 //设置新item内容
                 newitem.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
@@ -42,5 +48,17 @@ public class SecondAddActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void save(ArrayList task){
+        Gson gson = new Gson();
+        String listJson = gson.toJson(task);
+        try {
+            FileOutputStream outputStream = openFileOutput("data", Context.MODE_PRIVATE);
+            outputStream.write(listJson.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
