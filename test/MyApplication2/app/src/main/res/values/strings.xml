@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="title_name">Title:</string>
+    <string name="category_name">Category:</string>
+    <string name="deadline_name">Deadline:</string>
+    <string name="workload_name">Workload:</string>
+    <string name="content_name">Content:</string>
 </resources>

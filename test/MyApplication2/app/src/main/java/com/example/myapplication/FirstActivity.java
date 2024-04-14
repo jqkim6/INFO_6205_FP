@@ -41,7 +41,7 @@ public class FirstActivity extends AppCompatActivity {
         toDoList.add(new ToDoItem());
 
         // 初始化 Adapter 并设置给 RecyclerView
-        adapter = new ToDoAdapter(toDoList);
+        adapter = new ToDoAdapter(toDoList,this);
         recyclerView.setAdapter(adapter);
 
     }

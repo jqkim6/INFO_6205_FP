@@ -10,4 +10,12 @@ public class ToDoItem {
     public String getText() {
         return content;
     }
+
+    public String getCategory() { return content;}
+
+    public String getDeadline() {return content;}
+
+    public String getWorkload() {return content; }
+
+    public String getContent() { return content;}
 }
