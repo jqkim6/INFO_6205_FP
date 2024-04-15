@@ -2,22 +2,20 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -60,6 +58,14 @@ public class FirstAddActivity extends AppCompatActivity {
                 taskitem.add(workload);
                 Intent intent = new Intent(FirstAddActivity.this, SecondAddActivity.class);
                 intent.putStringArrayListExtra("TaskItem",taskitem);
+                startActivity(intent);
+            }
+        });
+        ImageButton button2=findViewById(R.id.imageButton3);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FirstAddActivity.this, FirstActivity.class);
                 startActivity(intent);
             }
         });
