@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -76,24 +77,26 @@ public class FirstActivity extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Collections.sort(ToDoAdapter.getInstance(getApplicationContext()).getItems(), new Comparator<ToDoItem>() {
-                    @Override
-                    public int compare(ToDoItem item1, ToDoItem item2) {
-                        // 首先按照 deadline 排序
-                        int result = item1.getDeadline().compareTo(item2.getDeadline());
-                        // 如果 deadline 相同，则按照 workload 排序
-                        if (result == 0) {
-                            Map<String, Double> dictionary = new HashMap<>();
-                            dictionary.put("Light", 0.5);
-                            dictionary.put("Medium", 1.5);
-                            dictionary.put("Heavy", 3.0);
-                            result = Double.compare(dictionary.get(item1.getWorkload()), dictionary.get(item2.getWorkload()));
-                        }
-                        return result;
-                    }
-                });
-                ToDoAdapter.getInstance(getApplicationContext()).notifyDataSetChanged();
+
                 if (item.getItemId() == R.id.action1) {
+                    Collections.sort(ToDoAdapter.getInstance(getApplicationContext()).getItems(), new Comparator<ToDoItem>() {
+                        @Override
+                        public int compare(ToDoItem item1, ToDoItem item2) {
+                            // 首先按照 deadline 排序
+                            int result = item1.getDeadline().compareTo(item2.getDeadline());
+                            // 如果 deadline 相同，则按照 workload 排序
+                            if (result == 0) {
+                                Map<String, Double> dictionary = new HashMap<>();
+                                dictionary.put("Light", -0.5);
+                                dictionary.put("Medium", -1.5);
+                                dictionary.put("Heavy", -3.0);
+                                result = Double.compare(dictionary.get(item1.getWorkload()), dictionary.get(item2.getWorkload()));
+                            }
+                            setInvisibleRecursively(findViewById(R.id.recycler_view));
+                            return result;
+                        }
+                    });
+                    ToDoAdapter.getInstance(getApplicationContext()).notifyDataSetChanged();
                     return true;
                 } else if (item.getItemId() == R.id.action2) {
                     return true;
@@ -104,5 +107,15 @@ public class FirstActivity extends AppCompatActivity {
         // 显示菜单
         popupMenu.show();
     }
-
+    public void setInvisibleRecursively(View view) {
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int i = 0, count = group.getChildCount(); i < count; i++) {
+                View child = group.getChildAt(i);
+                setInvisibleRecursively(child);
+            }
+        } else if (view instanceof Button && view.getId() == R.id.button_todo_delete) {
+            view.setVisibility(View.GONE);
+        }
+    }
 }
