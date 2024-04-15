@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.content.Intent;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +18,18 @@ import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> implements ItemTouchHelperAdapter {
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
+    private Context context; // 成员变量
+
+    public ToDoAdapter(Context context, ArrayList<ToDoItem> toDoItems) {
+        this.context = context;
+        this.toDoItems = toDoItems;
+    }
     private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
 
     // 提供一个合适的构造函数（取决于数据的类型）
 
-    public static ToDoAdapter getInstance(){
+    public static ToDoAdapter getInstance(Context context) {
+        inst.context = context; // 确保 context 总是更新为最新
         return inst;
     }
     public ToDoAdapter(ArrayList<ToDoItem> toDoItems) {
@@ -47,42 +57,60 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         }
         notifyItemMoved(fromPosition, toPosition);
     }
+
     @Override
     public ToDoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // 创建一个新的视图
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task_items, parent, false);
         return new ToDoViewHolder(itemView);
     }
 
 
+
     // 替换视图的内容（由布局管理器调用）
     @Override
     public void onBindViewHolder(ToDoViewHolder holder, int position) {
-        // - 获取元素数据
+        // 绑定数据
         ToDoItem item = toDoItems.get(position);
-        // - 用该元素的数据替换视图的内容
         holder.textView.setText(item.getTitle());
-        // 这里你可以设置更多视图的属性，如点击事件监听器等
-        holder.itemView.setOnLongClickListener(v -> {
-            // 显示删除按钮
-            holder.deleteButton.setVisibility(View.VISIBLE);
-            return true; // 返回 true 表示消费了事件
-        });
-        holder.itemView.setOnClickListener(v -> {
-            // 显示删除按钮
-            if (holder.deleteButton.getVisibility()==View.VISIBLE){
-                holder.deleteButton.setVisibility(View.GONE);
-            }
 
+        // 设置长按监听器来显示删除按钮
+        holder.itemView.setOnLongClickListener(v -> {
+            holder.deleteButton.setVisibility(View.VISIBLE);
+            return true;
         });
+
+        // 设置单击监听器
+        holder.itemView.setOnClickListener(v -> {
+            int adapterPosition = holder.getAdapterPosition(); // 获取当前的位置
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (holder.deleteButton.getVisibility() == View.VISIBLE) {
+                    holder.deleteButton.setVisibility(View.GONE);
+                } else {
+                    Intent intent = new Intent(context, ShowDetailActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("EXTRA_TODO_ITEM_TEXT", toDoItems.get(adapterPosition).getTitle());
+                    intent.putExtra("EXTRA_CATEGORY", toDoItems.get(adapterPosition).getCategory());
+                    intent.putExtra("EXTRA_DEADLINE", toDoItems.get(adapterPosition).getDeadline());
+                    intent.putExtra("EXTRA_WORKLOAD", toDoItems.get(adapterPosition).getWorkload());
+                    intent.putExtra("EXTRA_CONTENT", toDoItems.get(adapterPosition).getContent());
+                    context.startActivity(intent);
+                }
+            }
+        });
+
         // 删除按钮的点击事件
         holder.deleteButton.setOnClickListener(v -> {
-            // 执行删除操作
-            toDoItems.remove(position);
-            notifyItemRemoved(position);
+            int adapterPosition = holder.getAdapterPosition(); // 获取当前的位置
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                toDoItems.remove(adapterPosition);
+                notifyItemRemoved(adapterPosition);
+                notifyItemRangeChanged(adapterPosition, toDoItems.size());
+            }
         });
     }
+
+
 
     // 返回数据集的大小（由布局管理器调用）
     public void addTask(ToDoItem item){

@@ -42,7 +42,7 @@ public class SecondAddActivity extends AppCompatActivity {
                 //设置新item内容
                 newitem.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
                 //
-                ToDoAdapter.getInstance().addTask(newitem);
+                ToDoAdapter.getInstance(getApplicationContext()).addTask(newitem);
                 Intent intent = new Intent(SecondAddActivity.this, FirstActivity.class);
                 startActivity(intent);
             }

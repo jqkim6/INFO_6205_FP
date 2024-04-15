@@ -20,7 +20,7 @@ public class ItemManager {
         if (instance == null) {
             instance = new ItemManager(context);
             ArrayList<ToDoItem> loadedItems=instance.loadItems();
-            ToDoAdapter.getInstance().setItems(loadedItems);
+            ToDoAdapter.getInstance(context.getApplicationContext()).setItems(loadedItems);
         }
         return instance;
     }
@@ -31,7 +31,7 @@ public class ItemManager {
         this.context = context.getApplicationContext(); // 使用ApplicationContext来避免潜在的内存泄漏
     }
     public void saveItems() {
-        String json = gson.toJson(ToDoAdapter.getInstance().getItems());
+        String json = gson.toJson(ToDoAdapter.getInstance(context.getApplicationContext()).getItems());
         try {
             FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             OutputStreamWriter writer = new OutputStreamWriter(fos);

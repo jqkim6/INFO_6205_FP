@@ -47,7 +47,7 @@ public class FirstActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 初始化待办事项数据列表
-        ToDoAdapter adapter = ToDoAdapter.getInstance();
+        ToDoAdapter adapter = ToDoAdapter.getInstance(this);
         recyclerView.setAdapter(adapter);
 
 // 设置 ItemTouchHelper

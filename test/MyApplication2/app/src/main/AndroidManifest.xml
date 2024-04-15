@@ -26,6 +26,8 @@
         <activity
             android:name=".FirstAddActivity"
             android:exported="false" />
+        <activity android:name=".ShowDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
