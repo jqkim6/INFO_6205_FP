@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -30,6 +32,8 @@ public class FirstAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_add);
+        setupCategoryDropdown();
+        setupWorkloadDropdown();
 
         Button button1 = (Button) findViewById(R.id.nextButton);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -47,9 +51,9 @@ public class FirstAddActivity extends AppCompatActivity {
                 // 如果title不为空，则清除错误信息
                 TextInputLayout textInputLayoutTitle = findViewById(R.id.textInputLayoutTitle);
                 textInputLayoutTitle.setError(null);
-                String category=((TextInputEditText)findViewById(R.id.textInputCategory)).getText().toString();
+                String category=((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteCategory)).getText().toString();
                 String deadline=((EditText)findViewById(R.id.editTextDeadline)).getText().toString();
-                String workload=((TextInputEditText)findViewById(R.id.textInputWorkload)).getText().toString();
+                String workload=((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteWorkload)).getText().toString();
                 taskitem.add(title);
                 taskitem.add(category);
                 taskitem.add(deadline);
@@ -78,5 +82,27 @@ public class FirstAddActivity extends AppCompatActivity {
         });
 
         datePicker.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    private void setupCategoryDropdown() {
+        String[] categories = new String[] {"Education", "Personal", "Work"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                R.layout.dropdown_menu_popup_item,
+                categories
+        );
+        AutoCompleteTextView dropdownCategory = findViewById(R.id.autoCompleteCategory);
+        dropdownCategory.setAdapter(adapter);
+    }
+
+    private void setupWorkloadDropdown() {
+        String[] workloads = new String[] {"Light", "Medium", "Heavy"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                R.layout.dropdown_menu_popup_item,
+                workloads
+        );
+        AutoCompleteTextView dropdownWorkload = findViewById(R.id.autoCompleteWorkload);
+        dropdownWorkload.setAdapter(adapter);
     }
 }
