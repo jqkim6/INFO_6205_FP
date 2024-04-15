@@ -11,11 +11,12 @@
         android:id="@+id/textView_text"
         android:layout_width="262dp"
         android:layout_height="35dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="19dp"
+        android:background="#EFEEEE"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_title_name"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
@@ -29,7 +30,8 @@
         android:layout_marginTop="20dp"
         android:text="@string/title_name"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
@@ -41,7 +43,8 @@
         android:layout_marginTop="28dp"
         android:text="@string/category_name"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_title_name" />
 
@@ -52,10 +55,10 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="19dp"
+        android:background="#EFEEEE"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView_category_name"
         app:layout_constraintTop_toBottomOf="@+id/textView_text" />
 
@@ -67,7 +70,8 @@
         android:layout_marginTop="32dp"
         android:text="@string/deadline_name"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_category_name" />
 
@@ -75,25 +79,26 @@
         android:id="@+id/textView_deadline"
         android:layout_width="262dp"
         android:layout_height="35dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="19dp"
+        android:background="#EFEEEE"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView_deadline_name"
         app:layout_constraintTop_toBottomOf="@+id/textView_category" />
 
     <TextView
         android:id="@+id/textView_workload_name"
-        android:layout_width="80dp"
+        android:layout_width="90dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/workload_name"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_deadline_name" />
 
@@ -101,13 +106,13 @@
         android:id="@+id/textView_workload"
         android:layout_width="262dp"
         android:layout_height="35dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="19dp"
+        android:background="#EFEEEE"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textView_workload_name"
         app:layout_constraintTop_toBottomOf="@+id/textView_deadline" />
 
@@ -119,7 +124,8 @@
         android:layout_marginTop="28dp"
         android:text="@string/content_name"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_workload_name" />
 
@@ -129,8 +135,9 @@
         android:layout_height="207dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="19dp"
+        android:background="#F1EAEA"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.558"
