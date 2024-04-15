@@ -22,6 +22,11 @@ import java.util.ArrayList;
 public class SecondAddActivity extends AppCompatActivity {
     ArrayList<String> curtask=null;
     @Override
+    public void onStop() {
+        super.onStop();
+        ItemManager.getInstance(this).saveItems();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         curtask=getIntent().getStringArrayListExtra("TaskItem");
@@ -33,7 +38,6 @@ public class SecondAddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String content=((TextInputEditText)findViewById(R.id.textInputContent)).getText().toString();
                 curtask.add(content);
-                save(curtask);
                 ToDoItem newitem=new ToDoItem();
                 //设置新item内容
                 newitem.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
@@ -48,17 +52,5 @@ public class SecondAddActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
-
-    private void save(ArrayList task){
-        Gson gson = new Gson();
-        String listJson = gson.toJson(task);
-        try {
-            FileOutputStream outputStream = openFileOutput("data", Context.MODE_PRIVATE);
-            outputStream.write(listJson.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

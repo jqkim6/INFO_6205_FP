@@ -11,24 +11,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemManager {
+    private static ItemManager instance;
     private static final String FILE_NAME = "data.json";
+    private final Gson gson=new Gson();
     private Context context;
-    private Gson gson;
-    private List<ToDoItem> items;
 
+    public static synchronized ItemManager getInstance(Context context) {
+        if (instance == null) {
+            instance = new ItemManager(context);
+            ArrayList<ToDoItem> loadedItems=instance.loadItems();
+            ToDoAdapter.getInstance().setItems(loadedItems);
+        }
+        return instance;
+    }
+    public void changeContext(Context context){
+        this.context=context;
+    }
     public ItemManager(Context context) {
-        this.context = context;
-        this.gson = new Gson();
-        this.items = loadItems();  // 加载现有任务列表
+        this.context = context.getApplicationContext(); // 使用ApplicationContext来避免潜在的内存泄漏
     }
-
-    public void addItem(ToDoItem item) {
-        this.items.add(item);
-        saveItems();  // 每次添加项后保存整个列表
-    }
-
-    private void saveItems() {
-        String json = gson.toJson(this.items);
+    public void saveItems() {
+        String json = gson.toJson(ToDoAdapter.getInstance().getItems());
         try {
             FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             OutputStreamWriter writer = new OutputStreamWriter(fos);
@@ -40,12 +43,12 @@ public class ItemManager {
         }
     }
 
-    private List<ToDoItem> loadItems() {
+    public ArrayList<ToDoItem> loadItems() {
         try {
             FileInputStream fis = context.openFileInput(FILE_NAME);
             InputStreamReader isr = new InputStreamReader(fis);
             Type listType = new TypeToken<ArrayList<ToDoItem>>(){}.getType();
-            List<ToDoItem> loadedItems = gson.fromJson(isr, listType);
+            ArrayList<ToDoItem> loadedItems = gson.fromJson(isr, listType);
             isr.close();
             fis.close();
             return loadedItems != null ? loadedItems : new ArrayList<>();
@@ -57,7 +60,5 @@ public class ItemManager {
         }
     }
 
-    public List<ToDoItem> getItems() {
-        return this.items;
-    }
+
 }

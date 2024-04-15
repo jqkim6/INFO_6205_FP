@@ -13,15 +13,22 @@ import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> {
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
-    private List<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
+    private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
 
     // 提供一个合适的构造函数（取决于数据的类型）
 
     public static ToDoAdapter getInstance(){
         return inst;
     }
-    public ToDoAdapter(List<ToDoItem> toDoItems) {
+    public ToDoAdapter(ArrayList<ToDoItem> toDoItems) {
         this.toDoItems = toDoItems;
+    }
+
+    public void setItems(ArrayList<ToDoItem> toDoItems){
+        this.toDoItems = toDoItems;
+    }
+    public ArrayList<ToDoItem> getItems(){
+        return this.toDoItems;
     }
 
     // 创建新视图（由布局管理器调用）

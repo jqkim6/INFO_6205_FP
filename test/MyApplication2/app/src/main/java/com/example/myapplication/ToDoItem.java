@@ -4,9 +4,7 @@ import java.util.Date;
 public class ToDoItem extends Item {
     private String title = "default title";
     private String content = "default content";
-    private Date date = new Date();  // 创建一个Date对象，表示当前时间
-    private SimpleDateFormat simpleFormatter = new SimpleDateFormat("yyyy-MM-dd");
-    private String deadline = simpleFormatter.format(date);
+    private String deadline = super.simpleformatter.format(date);
     private String category = "none";
     private String workload = "light";
 

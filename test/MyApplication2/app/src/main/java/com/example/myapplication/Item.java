@@ -6,5 +6,5 @@ import java.util.Date;
 public class Item {
     protected Date date=new Date();
     @SuppressLint("SimpleDateFormat")
-    protected SimpleDateFormat simpleformatter=new SimpleDateFormat("yyyy-MM-dd");
+    transient protected SimpleDateFormat simpleformatter=new SimpleDateFormat("yyyy-MM-dd");
 }

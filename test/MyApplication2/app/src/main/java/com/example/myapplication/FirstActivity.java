@@ -18,10 +18,18 @@ public class FirstActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ToDoAdapter adapter;
     private List<ToDoItem> toDoList; // 假设你的待办事项是一个字符串列表
+    private ItemManager itemManager;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ItemManager.getInstance(getApplicationContext()).saveItems();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_layout);
+        itemManager = ItemManager.getInstance(getApplicationContext());
         FloatingActionButton button1 = findViewById(R.id.floatingActionButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
