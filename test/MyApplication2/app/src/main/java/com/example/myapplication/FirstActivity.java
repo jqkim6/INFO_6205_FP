@@ -1,5 +1,8 @@
 package com.example.myapplication;
+import java.util.Collections;
+import java.util.Comparator;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,12 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FirstActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private ToDoAdapter adapter;
-    private List<ToDoItem> toDoList; // 假设你的待办事项是一个字符串列表
     private ItemManager itemManager;
 
     @Override
@@ -70,9 +73,26 @@ public class FirstActivity extends AppCompatActivity {
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.getMenuInflater().inflate(R.menu.main_menu, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                // 处理菜单项的点击事件
+                Collections.sort(ToDoAdapter.getInstance(getApplicationContext()).getItems(), new Comparator<ToDoItem>() {
+                    @Override
+                    public int compare(ToDoItem item1, ToDoItem item2) {
+                        // 首先按照 deadline 排序
+                        int result = item1.getDeadline().compareTo(item2.getDeadline());
+                        // 如果 deadline 相同，则按照 workload 排序
+                        if (result == 0) {
+                            Map<String, Double> dictionary = new HashMap<>();
+                            dictionary.put("Light", 0.5);
+                            dictionary.put("Medium", 1.5);
+                            dictionary.put("Heavy", 3.0);
+                            result = Double.compare(dictionary.get(item1.getWorkload()), dictionary.get(item2.getWorkload()));
+                        }
+                        return result;
+                    }
+                });
+                ToDoAdapter.getInstance(getApplicationContext()).notifyDataSetChanged();
                 if (item.getItemId() == R.id.action1) {
                     return true;
                 } else if (item.getItemId() == R.id.action2) {

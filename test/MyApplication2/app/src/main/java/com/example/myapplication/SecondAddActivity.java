@@ -24,7 +24,7 @@ public class SecondAddActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        ItemManager.getInstance(this).saveItems();
+        ItemManager.getInstance(getApplicationContext()).saveItems();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

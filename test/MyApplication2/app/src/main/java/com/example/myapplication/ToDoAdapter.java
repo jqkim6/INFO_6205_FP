@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> implements ItemTouchHelperAdapter {
+    private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
     private Context context; // 成员变量
 
@@ -24,7 +25,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         this.context = context;
         this.toDoItems = toDoItems;
     }
-    private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
+
 
     // 提供一个合适的构造函数（取决于数据的类型）
 
@@ -73,7 +74,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         // 绑定数据
         ToDoItem item = toDoItems.get(position);
         holder.textView.setText(item.getTitle());
-
+        holder.textView2.setText(item.getDeadline());
         // 设置长按监听器来显示删除按钮
         holder.itemView.setOnLongClickListener(v -> {
             holder.deleteButton.setVisibility(View.VISIBLE);
@@ -125,12 +126,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     // 你提供视图的所有组件的访问器是自定义的 ViewHolder
     public static class ToDoViewHolder extends RecyclerView.ViewHolder {
         // 在这里你声明 item 视图的所有组件
+        public TextView textView2;
         public TextView textView;
         public Button deleteButton;
         public ToDoViewHolder(View itemView) {
             super(itemView);
             // 这里你初始化视图组件
             textView = itemView.findViewById(R.id.textView_todo_item);
+            textView2=itemView.findViewById(R.id.ListShowDeadline);
             refreshbutton();
         }
         public void refreshbutton(){
