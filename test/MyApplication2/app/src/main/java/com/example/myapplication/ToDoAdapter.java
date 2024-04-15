@@ -71,7 +71,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         });
         holder.itemView.setOnClickListener(v -> {
             // 显示删除按钮
-            holder.deleteButton.setVisibility(View.GONE);
+            if (holder.deleteButton.getVisibility()==View.VISIBLE){
+                holder.deleteButton.setVisibility(View.GONE);
+            }
+
         });
         // 删除按钮的点击事件
         holder.deleteButton.setOnClickListener(v -> {

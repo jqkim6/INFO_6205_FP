@@ -16,8 +16,7 @@
             android:exported="false" />
         <activity
             android:name=".FirstActivity"
-            android:exported="true"
-            android:label="Task List">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
