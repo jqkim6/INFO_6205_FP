@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +37,16 @@ public class FirstAddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ArrayList<String> taskitem=new ArrayList<>();
                 String title=((TextInputEditText)findViewById(R.id.textInputTitle)).getText().toString();
+                if (title.isEmpty()) {
+                    // 显示错误信息
+                    TextInputLayout textInputLayoutTitle = findViewById(R.id.textInputLayoutTitle);
+                    textInputLayoutTitle.setError("Title is required");
+                    return; // 阻止进一步的处理
+                }
+
+                // 如果title不为空，则清除错误信息
+                TextInputLayout textInputLayoutTitle = findViewById(R.id.textInputLayoutTitle);
+                textInputLayoutTitle.setError(null);
                 String category=((TextInputEditText)findViewById(R.id.textInputCategory)).getText().toString();
                 String deadline=((EditText)findViewById(R.id.editTextDeadline)).getText().toString();
                 String workload=((TextInputEditText)findViewById(R.id.textInputWorkload)).getText().toString();
