@@ -46,7 +46,11 @@ public class QuickSort {
             dictionary.put("Light", -0.5);
             dictionary.put("Medium", -1.5);
             dictionary.put("Heavy", -3.0);
+            dictionary.put("",-1.5);
             result = Double.compare(dictionary.get(item1.getWorkload()), dictionary.get(item2.getWorkload()));
+        }
+        if(result==0){
+            result = item1.getTitle().compareTo(item2.getTitle()) ;
         }
         return result;
     }

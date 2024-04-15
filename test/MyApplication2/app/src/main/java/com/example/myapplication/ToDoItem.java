@@ -1,6 +1,8 @@
 package com.example.myapplication;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
+
 public class ToDoItem extends Item {
     private String title = "default title";
     private String content = "default content";
@@ -23,6 +25,9 @@ public class ToDoItem extends Item {
         this.deadline = deadline;
         this.category = category;
         this.workload = workload;
+        if (Objects.equals(deadline, "")){
+            this.deadline="Daily";
+        }
     }
 
     // Getters

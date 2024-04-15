@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,6 +52,11 @@ public class SecondAddActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        ImageButton button2=findViewById(R.id.imageButton4);
+        button2.setOnClickListener(v->{
+            Intent inten=new Intent(SecondAddActivity.this, FirstAddActivity.class);
+            startActivity(inten);
         });
     }
 }
