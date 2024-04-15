@@ -6,12 +6,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> {
+public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> implements ItemTouchHelperAdapter {
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
     private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
 
@@ -33,12 +35,26 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
 
     // 创建新视图（由布局管理器调用）
     @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(toDoItems, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(toDoItems, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+    @Override
     public ToDoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 创建一个新的视图
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.task_items, parent, false);
         return new ToDoViewHolder(itemView);
     }
+
 
     // 替换视图的内容（由布局管理器调用）
     @Override
@@ -53,7 +69,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
             holder.deleteButton.setVisibility(View.VISIBLE);
             return true; // 返回 true 表示消费了事件
         });
-
+        holder.itemView.setOnClickListener(v -> {
+            // 显示删除按钮
+            holder.deleteButton.setVisibility(View.GONE);
+        });
         // 删除按钮的点击事件
         holder.deleteButton.setOnClickListener(v -> {
             // 执行删除操作

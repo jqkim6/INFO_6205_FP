@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,7 +43,14 @@ public class FirstActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 初始化待办事项数据列表
-        recyclerView.setAdapter(ToDoAdapter.getInstance());
+        ToDoAdapter adapter = ToDoAdapter.getInstance(); // 获取您的单例适配器实例
+        recyclerView.setAdapter(adapter);
+
+// 设置 ItemTouchHelper
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
+
 
     }
 
