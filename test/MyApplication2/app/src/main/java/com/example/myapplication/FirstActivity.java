@@ -40,10 +40,18 @@ public class FirstActivity extends AppCompatActivity {
         setContentView(R.layout.first_layout);
         itemManager = ItemManager.getInstance(getApplicationContext());
         FloatingActionButton button1 = findViewById(R.id.floatingActionButton);
+        ImageButton button2=findViewById(R.id.imageButton2);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FirstActivity.this, FirstAddActivity.class);
+                startActivity(intent);
+            }
+        });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FirstActivity.this, HomePage.class);
                 startActivity(intent);
             }
         });
