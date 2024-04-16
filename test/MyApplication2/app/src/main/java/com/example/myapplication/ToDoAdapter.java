@@ -10,6 +10,7 @@ import android.content.Intent;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
     private Context context; // 成员变量
-
+    private RecyclerView rv;
     public ToDoAdapter(Context context, ArrayList<ToDoItem> toDoItems) {
         this.context = context;
         this.toDoItems = toDoItems;
@@ -28,7 +29,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
 
 
     // 提供一个合适的构造函数（取决于数据的类型）
-
+    public void setRV(RecyclerView view){
+        this.rv=view;
+    }
     public static ToDoAdapter getInstance(Context context) {
         inst.context = context; // 确保 context 总是更新为最新
         return inst;
@@ -103,12 +106,26 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         // 删除按钮的点击事件
         holder.deleteButton.setOnClickListener(v -> {
             int adapterPosition = holder.getAdapterPosition(); // 获取当前的位置
+
             if (adapterPosition != RecyclerView.NO_POSITION) {
+                holder.deleteButton.setVisibility(View.GONE);
                 toDoItems.remove(adapterPosition);
                 notifyItemRemoved(adapterPosition);
                 notifyItemRangeChanged(adapterPosition, toDoItems.size());
+                setInvisibleRecursively(this.rv);
             }
         });
+    }
+    public void setInvisibleRecursively(View view) {
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int i = 0, count = group.getChildCount(); i < count; i++) {
+                View child = group.getChildAt(i);
+                setInvisibleRecursively(child);
+            }
+        } else if (view instanceof Button && view.getId() == R.id.button_todo_delete) {
+            view.setVisibility(View.GONE);
+        }
     }
 
 

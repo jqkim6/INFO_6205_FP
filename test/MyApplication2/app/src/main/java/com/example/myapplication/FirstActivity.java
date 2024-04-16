@@ -41,6 +41,7 @@ public class FirstActivity extends AppCompatActivity {
         itemManager = ItemManager.getInstance(getApplicationContext());
         FloatingActionButton button1 = findViewById(R.id.floatingActionButton);
         ImageButton button2=findViewById(R.id.imageButton2);
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +60,9 @@ public class FirstActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 初始化待办事项数据列表
-        ToDoAdapter adapter = ToDoAdapter.getInstance(this);
+        ToDoAdapter adapter = ToDoAdapter.getInstance(getApplicationContext());
         recyclerView.setAdapter(adapter);
+        ToDoAdapter.getInstance(getApplicationContext()).setRV(recyclerView);
 
 // 设置 ItemTouchHelper
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
