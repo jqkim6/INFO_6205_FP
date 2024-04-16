@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class FirstActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -87,14 +88,30 @@ public class FirstActivity extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
+                ToDoItem hilightitem=null;
                 if (item.getItemId() == R.id.action1) {
+                    if(ToDoAdapter.getInstance().gethilightindex()!=-1){
+                        hilightitem=ToDoAdapter.getInstance().getItems().get(ToDoAdapter.getInstance().gethilightindex());
+                    }
                     ArrayList <ToDoItem> items=ToDoAdapter.getInstance(getApplicationContext()).getItems();
                     QuickSort.sort(items,0,items.size()-1);
                     setInvisibleRecursively(findViewById(R.id.recycler_view));
                     ToDoAdapter.getInstance(getApplicationContext()).notifyDataSetChanged();
+                    ToDoAdapter.getInstance(getApplicationContext()).sethilightindex(-1);
+                    if(hilightitem!=null){
+                        ToDoAdapter.getInstance(getApplicationContext()).sethilightindex(ToDoAdapter.getInstance().getItems().indexOf(hilightitem));
+                    }
                     return true;
                 } else if (item.getItemId() == R.id.action2) {
+                    Comparator<ToDoItem> comp=new TensionComparator();
+                    PriorityQueue<ToDoItem> queue=new PriorityQueue<>(comp);
+                    for (int i=0;i<ToDoAdapter.getInstance(getApplicationContext()).getItems().size();i++){
+                        queue.add(ToDoAdapter.getInstance(getApplicationContext()).getItems().get(i));
+                        if(!queue.isEmpty()){
+                            int index=ToDoAdapter.getInstance(getApplicationContext()).getItems().indexOf(queue.peek());
+                            ToDoAdapter.getInstance(getApplicationContext()).sethilightindex(index);
+                        }
+                    }
                     return true;
                 }
                 return false;

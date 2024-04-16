@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
     private Context context; // 成员变量
     private RecyclerView rv;
+    private int highlightedIndex = -1;
     public ToDoAdapter(Context context, ArrayList<ToDoItem> toDoItems) {
         this.context = context;
         this.toDoItems = toDoItems;
@@ -34,6 +37,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     }
     public static ToDoAdapter getInstance(Context context) {
         inst.context = context; // 确保 context 总是更新为最新
+        return inst;
+    }
+    public static ToDoAdapter getInstance() {
         return inst;
     }
     public ToDoAdapter(ArrayList<ToDoItem> toDoItems) {
@@ -59,6 +65,16 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 Collections.swap(toDoItems, i, i - 1);
             }
         }
+        if(highlightedIndex!=-1){
+            if (fromPosition<highlightedIndex && toPosition>=highlightedIndex ){
+                highlightedIndex-=1;
+            } else if (fromPosition >highlightedIndex && toPosition<=highlightedIndex) {
+                highlightedIndex+=1;
+            }
+        }
+        if(fromPosition==highlightedIndex){
+            highlightedIndex=toPosition;
+        }
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -69,7 +85,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         return new ToDoViewHolder(itemView);
     }
 
-
+    @SuppressLint("NotifyDataSetChanged")
+    public void sethilightindex(int i){
+        this.highlightedIndex=i;
+        notifyDataSetChanged();
+    }
 
     // 替换视图的内容（由布局管理器调用）
     @Override
@@ -83,6 +103,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
             holder.deleteButton.setVisibility(View.VISIBLE);
             return true;
         });
+        if (position == highlightedIndex) {
+            holder.itemView.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.highlighted_background));
+        } else {
+            holder.itemView.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.normal_background));
+        }
 
         // 设置单击监听器
         holder.itemView.setOnClickListener(v -> {
@@ -113,8 +138,12 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 notifyItemRemoved(adapterPosition);
                 notifyItemRangeChanged(adapterPosition, toDoItems.size());
                 setInvisibleRecursively(this.rv);
+                ToDoAdapter.getInstance().sethilightindex(-1);
             }
         });
+    }
+    public int gethilightindex(){
+        return this.highlightedIndex;
     }
     public void setInvisibleRecursively(View view) {
         if (view instanceof ViewGroup) {
