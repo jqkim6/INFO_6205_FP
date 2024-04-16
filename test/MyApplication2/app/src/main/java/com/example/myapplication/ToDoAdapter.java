@@ -66,15 +66,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
             }
         }
         if(highlightedIndex!=-1){
-            if (fromPosition<highlightedIndex && toPosition>=highlightedIndex ){
+            if(fromPosition==highlightedIndex){
+                highlightedIndex=toPosition;
+            }
+            else if (fromPosition<highlightedIndex && toPosition>=highlightedIndex ){
                 highlightedIndex-=1;
-            } else if (fromPosition >highlightedIndex && toPosition<=highlightedIndex) {
+            }
+            else if (fromPosition >highlightedIndex && toPosition<=highlightedIndex) {
                 highlightedIndex+=1;
             }
         }
-        if(fromPosition==highlightedIndex){
-            highlightedIndex=toPosition;
-        }
+
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -138,10 +140,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 notifyItemRemoved(adapterPosition);
                 notifyItemRangeChanged(adapterPosition, toDoItems.size());
                 setInvisibleRecursively(this.rv);
-                if(adapterPosition==ToDoAdapter.getInstance().gethilightindex()){
-                    ToDoAdapter.getInstance().sethilightindex(-1);
-                }
-                else{
+                if(highlightedIndex!=-1) {
                     GetMostIntensive.getMostIntensive();
                 }
             }
