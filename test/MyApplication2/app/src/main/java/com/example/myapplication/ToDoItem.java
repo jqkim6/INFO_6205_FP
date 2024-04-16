@@ -50,4 +50,9 @@ public class ToDoItem extends Item {
     public String getWorkload() {
         return workload;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        return this==obj;
+    }
 }
