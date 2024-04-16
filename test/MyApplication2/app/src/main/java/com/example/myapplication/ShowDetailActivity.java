@@ -36,12 +36,15 @@ public class ShowDetailActivity extends AppCompatActivity {
         // 日志输出
         Log.d("ShowDetailActivity", "Received text: " + text1);
 
+        ItemsArrayList<String> task = new ItemsArrayList<>();
+
         // 接收传递过来的数据
-        String text = getIntent().getStringExtra("EXTRA_TODO_ITEM_TEXT");
-        String category = getIntent().getStringExtra("EXTRA_CATEGORY");
-        String deadline = getIntent().getStringExtra("EXTRA_DEADLINE");
-        String workload = getIntent().getStringExtra("EXTRA_WORKLOAD");
-        String content = getIntent().getStringExtra("EXTRA_CONTENT");
+        task.add(getIntent().getStringExtra("EXTRA_TODO_ITEM_TEXT"));
+        task.add(getIntent().getStringExtra("EXTRA_CATEGORY"));
+        task.add(getIntent().getStringExtra("EXTRA_DEADLINE"));
+        task.add(getIntent().getStringExtra("EXTRA_WORKLOAD"));
+        task.add(getIntent().getStringExtra("EXTRA_CONTENT"));
+
 
         // 将数据显示在界面上
         TextView textView = findViewById(R.id.textView_text);
@@ -50,11 +53,11 @@ public class ShowDetailActivity extends AppCompatActivity {
         TextView workloadView = findViewById(R.id.textView_workload);
         TextView contentView = findViewById(R.id.textView_content);
 
-        textView.setText(text);
-        categoryView.setText(category);
-        deadlineView.setText(deadline);
-        workloadView.setText(workload);
-        contentView.setText(content);
+        textView.setText(task.get(0));
+        categoryView.setText(task.get(1));
+        deadlineView.setText(task.get(2));
+        workloadView.setText(task.get(3));
+        contentView.setText(task.get(4));
 
         Button button=findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
