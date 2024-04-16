@@ -60,6 +60,18 @@ public class ItemsArrayList <E> {
         return oldValue;
     }
 
+    // 交换数组中两个指定索引位置的元素
+    public void swap(int index1, int index2) {
+        checkIndex(index1); // 检查第一个索引是否有效
+        checkIndex(index2); // 检查第二个索引是否有效
+
+        if (index1 != index2) { // 仅当两个索引不同才需要交换
+            E temp = (E) elements[index1]; // 保存第一个位置的元素
+            elements[index1] = elements[index2]; // 将第二个位置的元素移到第一个位置
+            elements[index2] = temp; // 将保存的元素移到第二个位置
+        }
+    }
+
     // 检查索引是否有效
     private void checkIndex(int index) {
         if (index >= size || index < 0) {
