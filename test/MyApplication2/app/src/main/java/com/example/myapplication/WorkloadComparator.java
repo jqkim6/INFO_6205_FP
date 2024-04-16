@@ -4,10 +4,10 @@ package com.example.myapplication;
 //import java.util.Map;
 
 public class WorkloadComparator {
-    private SimpleMap workloadMap;
+    private Map workloadMap;
 
     public WorkloadComparator() {
-        workloadMap = new SimpleMap();
+        workloadMap = new Map();
         workloadMap.put("Light", -0.5);
         workloadMap.put("Medium", -1.5);
         workloadMap.put("Heavy", -3.0);
@@ -22,7 +22,7 @@ public class WorkloadComparator {
     }
 
     // 键值对存储类
-    static class SimpleMap {
+    static class Map {
         private Entry[] entries = new Entry[100]; // 假设我们最多处理100个不同的键
         private int size = 0;
 
