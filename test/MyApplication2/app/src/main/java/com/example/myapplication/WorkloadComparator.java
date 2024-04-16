@@ -23,40 +23,69 @@ public class WorkloadComparator {
 
     // 键值对存储类
     static class Map {
-        private Entry[] entries = new Entry[100]; // 假设我们最多处理100个不同的键
-        private int size = 0;
+        private static final int CAPACITY = 16; // 默认容量
+        private Entry[] buckets = new Entry[CAPACITY];
 
         public void put(String key, double value) {
-            // 检查已有键并更新值
-            for (int i = 0; i < size; i++) {
-                if (entries[i].key.equals(key)) {
-                    entries[i].value = value;
+            int index = getIndex(key);
+            Entry newEntry = new Entry(key, value);
+            Entry current = buckets[index];
+
+            while (current != null) {
+                if (current.key.equals(key)) {
+                    current.value = value; // 更新已存在的键
                     return;
                 }
+                if (current.next == null) {
+                    current.next = newEntry; // 添加到链表的末尾
+                    return;
+                }
+                current = current.next;
             }
-            // 添加新键值对
-            if (size < entries.length) {
-                entries[size++] = new Entry(key, value);
-            }
+            buckets[index] = newEntry; // 新插入
         }
 
         public double getOrDefault(String key, double defaultValue) {
-            for (int i = 0; i < size; i++) {
-                if (entries[i].key.equals(key)) {
-                    return entries[i].value;
+            int index = getIndex(key);
+            Entry current = buckets[index];
+
+            while (current != null) {
+                if (current.key.equals(key)) {
+                    return current.value;
                 }
+                current = current.next;
             }
-            return defaultValue;
+            return defaultValue; // 默认值
         }
 
-        // 键值对存储结构
+        private int getIndex(String key) {
+            int hashCode = toAscii(key);
+            int index = hashCode % CAPACITY;
+            return index < 0 ? -index : index; // 确保索引为正
+        }
+
+        private int toAscii(String s){
+            String text = s;
+            int res = 0;
+            // 遍历字符串中的每个字符
+            for (int i = 0; i < text.length(); i++) {
+                char ch = text.charAt(i); // 获取字符
+                int ascii = (int) ch; // 将字符转换为对应的ASCII码（其实就是转换成int类型）
+                res += ascii;
+            }
+            return res;
+        }
+
+        // 存储元素的链表结构
         private static class Entry {
             String key;
             double value;
+            Entry next;
 
             Entry(String key, double value) {
                 this.key = key;
                 this.value = value;
+                this.next = null;
             }
         }
     }
