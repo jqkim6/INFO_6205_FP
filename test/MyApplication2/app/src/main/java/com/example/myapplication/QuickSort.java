@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class QuickSort {
+    private static WorkloadComparator workloadComparator = new WorkloadComparator();
 
     public static void sort(List<ToDoItem> arr, int low, int high) {
         if (low < high) {
@@ -42,15 +43,11 @@ public class QuickSort {
         int result = item1.getDeadline().compareTo(item2.getDeadline());
         // 如果 deadline 相同，则按照 workload 排序
         if (result == 0) {
-            Map<String, Double> dictionary = new HashMap<>();
-            dictionary.put("Light", -0.5);
-            dictionary.put("Medium", -1.5);
-            dictionary.put("Heavy", -3.0);
-            dictionary.put("",-1.5);
-            result = Double.compare(dictionary.get(item1.getWorkload()), dictionary.get(item2.getWorkload()));
+            result = workloadComparator.compare(item1.getWorkload(), item2.getWorkload());
         }
-        if(result==0){
-            result = item1.getTitle().compareTo(item2.getTitle()) ;
+        // 如果 workload 也相同，最后按 title 排序
+        if (result == 0) {
+            result = item1.getTitle().compareTo(item2.getTitle());
         }
         return result;
     }
