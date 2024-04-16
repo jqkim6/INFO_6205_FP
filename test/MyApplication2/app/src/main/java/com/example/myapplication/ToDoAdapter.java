@@ -138,7 +138,12 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 notifyItemRemoved(adapterPosition);
                 notifyItemRangeChanged(adapterPosition, toDoItems.size());
                 setInvisibleRecursively(this.rv);
-                ToDoAdapter.getInstance().sethilightindex(-1);
+                if(adapterPosition==ToDoAdapter.getInstance().gethilightindex()){
+                    ToDoAdapter.getInstance().sethilightindex(-1);
+                }
+                else{
+                    GetMostIntensive.getMostIntensive();
+                }
             }
         });
     }

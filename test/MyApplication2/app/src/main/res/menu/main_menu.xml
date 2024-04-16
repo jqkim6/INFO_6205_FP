@@ -2,6 +2,6 @@
     <item android:id="@+id/action1"
         android:title="Sorted by Deadline" />
     <item android:id="@+id/action2"
-        android:title="Option 2" />
+        android:title="Get Most Intensive" />
     <!-- 其他菜单项 -->
 </menu>

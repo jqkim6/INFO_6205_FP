@@ -22,8 +22,8 @@ public class TensionComparator  implements Comparator <ToDoItem>{
             if (! o2.getDeadline().equals("Daily")){
                 date2.set(Integer.parseInt(o2.getDeadline().split("-")[0]),Integer.parseInt(o2.getDeadline().split("-")[1])-1,Integer.parseInt(o2.getDeadline().split("-")[2]));
             }
-            long daysBetween1 = daysBetween(date1, Calendar.getInstance());
-            long daysBetween2=daysBetween(date2, Calendar.getInstance());
+            long daysBetween1 = daysBetween(Calendar.getInstance(),date1);
+            long daysBetween2=daysBetween(Calendar.getInstance(),date2);
             double r1= (double) 1 /daysBetween1+map.get(o1.getWorkload())/5;
             double r2= (double) 1 /daysBetween2+map.get(o2.getWorkload())/5;
             if (r1>r2){

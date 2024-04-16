@@ -44,6 +44,7 @@ public class SecondAddActivity extends AppCompatActivity {
                 newitem.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
                 //
                 ToDoAdapter.getInstance(getApplicationContext()).addTask(newitem);
+                GetMostIntensive.getMostIntensive();
                 Intent intent = new Intent(SecondAddActivity.this, FirstActivity.class);
                 startActivity(intent);
             }

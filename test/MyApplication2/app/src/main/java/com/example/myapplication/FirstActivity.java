@@ -88,30 +88,22 @@ public class FirstActivity extends AppCompatActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                ToDoItem hilightitem=null;
                 if (item.getItemId() == R.id.action1) {
-                    if(ToDoAdapter.getInstance().gethilightindex()!=-1){
-                        hilightitem=ToDoAdapter.getInstance().getItems().get(ToDoAdapter.getInstance().gethilightindex());
-                    }
+                    boolean cal= ToDoAdapter.getInstance().gethilightindex() != -1;
                     ArrayList <ToDoItem> items=ToDoAdapter.getInstance(getApplicationContext()).getItems();
                     QuickSort.sort(items,0,items.size()-1);
                     setInvisibleRecursively(findViewById(R.id.recycler_view));
-                    ToDoAdapter.getInstance(getApplicationContext()).notifyDataSetChanged();
-                    ToDoAdapter.getInstance(getApplicationContext()).sethilightindex(-1);
-                    if(hilightitem!=null){
-                        ToDoAdapter.getInstance(getApplicationContext()).sethilightindex(ToDoAdapter.getInstance().getItems().indexOf(hilightitem));
+                    ToDoAdapter.getInstance().notifyDataSetChanged();
+                    if(cal){
+                        GetMostIntensive.getMostIntensive();
                     }
                     return true;
                 } else if (item.getItemId() == R.id.action2) {
-                    Comparator<ToDoItem> comp=new TensionComparator();
-                    PriorityQueue<ToDoItem> queue=new PriorityQueue<>(comp);
-                    for (int i=0;i<ToDoAdapter.getInstance(getApplicationContext()).getItems().size();i++){
-                        queue.add(ToDoAdapter.getInstance(getApplicationContext()).getItems().get(i));
-                        if(!queue.isEmpty()){
-                            int index=ToDoAdapter.getInstance(getApplicationContext()).getItems().indexOf(queue.peek());
-                            ToDoAdapter.getInstance(getApplicationContext()).sethilightindex(index);
-                        }
+                    if(ToDoAdapter.getInstance().gethilightindex()!=-1){
+                        ToDoAdapter.getInstance().sethilightindex(-1);
+                        return true;
                     }
+                    GetMostIntensive.getMostIntensive();
                     return true;
                 }
                 return false;
