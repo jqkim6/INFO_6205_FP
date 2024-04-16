@@ -31,7 +31,7 @@
         android:layout_height="185dp"
         android:layout_marginStart="-5dp"
         android:layout_marginTop="65dp"
-        android:text="Task   Manager"
+        android:text="Task   Tracker"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
