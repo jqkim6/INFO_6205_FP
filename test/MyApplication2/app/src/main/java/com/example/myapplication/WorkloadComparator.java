@@ -59,9 +59,21 @@ public class WorkloadComparator {
         }
 
         private int getIndex(String key) {
-            int hashCode = key.hashCode();
+            int hashCode = toAscii(key);
             int index = hashCode % CAPACITY;
             return index < 0 ? -index : index; // 确保索引为正
+        }
+
+        private int toAscii(String s){
+            String text = s;
+            int res = 0;
+            // 遍历字符串中的每个字符
+            for (int i = 0; i < text.length(); i++) {
+                char ch = text.charAt(i); // 获取字符
+                int ascii = (int) ch; // 将字符转换为对应的ASCII码（其实就是转换成int类型）
+                res += ascii;
+            }
+            return res;
         }
 
         // 存储元素的链表结构
