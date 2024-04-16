@@ -28,9 +28,23 @@ public class TensionComparator  implements Comparator <ToDoItem>{
                     throw new RuntimeException(e);
                 }
             }
+            else{
+                try {
+                    date1.setTime(sdf.parse("9999-12-30"));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             if (! o2.getDeadline().equals("Daily")){
                 try {
                     date2.setTime(sdf.parse(o2.getDeadline()));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else{
+                try {
+                    date2.setTime(sdf.parse("9999-12-30"));
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
