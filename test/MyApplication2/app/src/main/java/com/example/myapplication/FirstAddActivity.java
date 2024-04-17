@@ -91,7 +91,7 @@ public class FirstAddActivity extends AppCompatActivity {
     }
 
     private void setupCategoryDropdown() {
-        String[] categories = new String[] {"Education", "Personal", "Work"};
+        String[] categories = new String[] {"Education", "Personal", "Work", "Other"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 R.layout.dropdown_menu_popup_item,
