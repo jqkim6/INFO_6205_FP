@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.icu.text.SimpleDateFormat;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,9 +119,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         holder.textView2.setText(item.getDeadline());
         if(!item.getDeadline().equals("Daily")&&!item.getDeadline().equals("Complete")) {
             Date cur = new Date();
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                boolean isBefore = sdf.parse(item.getDeadline()).before(cur) && (!sdf.parse(item.getDeadline()).equals(cur));
+                boolean isBefore = !cur.before(sdf.parse(item.getDeadline()));
+                if(sdf.format(cur).equals(item.getDeadline())){
+                    isBefore=false;
+                }
                 if(isBefore){
                     holder.textView2.setTextColor(Color.RED);
                 }
