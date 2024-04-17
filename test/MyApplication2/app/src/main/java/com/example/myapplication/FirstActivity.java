@@ -102,11 +102,11 @@ public class FirstActivity extends AppCompatActivity {
                     QuickSort.sort(items,0,items.size()-1);
                     setInvisibleRecursively(findViewById(R.id.recycler_view));
                     //ToDoAdapter.getInstance().notifyDataSetChanged();
-                    if(cal){
-                        GetMostIntensive.getMostIntensive();
-                    }
                     DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ToDoDiffCallback(oldlist, ToDoAdapter.getInstance().getItems()));
                     diffResult.dispatchUpdatesTo(ToDoAdapter.getInstance());
+                    if(cal){
+                        GetMostIntensive.getMostIntensive(true);
+                    }
                     return true;
                 } else if (item.getItemId() == R.id.action2) {
                     if(ToDoAdapter.getInstance().gethilightindex()!=-1){

@@ -92,6 +92,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         this.highlightedIndex=i;
         notifyDataSetChanged();
     }
+    public void onlySetHightIndex(int i){
+        this.highlightedIndex=i;
+    }
 
     // 替换视图的内容（由布局管理器调用）
     @Override
