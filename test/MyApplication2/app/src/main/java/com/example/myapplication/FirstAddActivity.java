@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -104,7 +105,7 @@ public class FirstAddActivity extends AppCompatActivity {
                         @Override
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                             // 月份从0开始，所以加1
-                            String date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                            @SuppressLint("DefaultLocale") String date = year + "-" + String.format("%02d", monthOfYear + 1) + "-" + String.format("%02d", dayOfMonth);
                             ((EditText) findViewById(R.id.editTextDeadline)).setText(date);
                         }
                     }, year, month, day);

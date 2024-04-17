@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.icu.text.SimpleDateFormat;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +21,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> implements ItemTouchHelperAdapter {
@@ -113,6 +116,18 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         ToDoItem item = toDoItems.get(position);
         holder.textView.setText(item.getTitle());
         holder.textView2.setText(item.getDeadline());
+        if(!item.getDeadline().equals("Daily")&&!item.getDeadline().equals("Complete")) {
+            Date cur = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                boolean isBefore = sdf.parse(item.getDeadline()).before(cur) && (!sdf.parse(item.getDeadline()).equals(cur));
+                if(isBefore){
+                    holder.textView2.setTextColor(Color.RED);
+                }
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
         switch (item.getWorkload()){
             case "Light":
                 drawable.getPaint().setColor(Color.GREEN);
@@ -127,7 +142,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 drawable.getPaint().setColor(Color.TRANSPARENT);
                 break;
         }
+
         holder.circleView.setBackground(drawable);
+        if (item.getDeadline().equals("Complete")){
+            holder.circleView.setBackground(ContextCompat.getDrawable(context,R.drawable.check));
+        }
         // 设置长按监听器来显示删除按钮
         holder.itemView.setOnLongClickListener(v -> {
             holder.deleteButton.setVisibility(View.VISIBLE);
