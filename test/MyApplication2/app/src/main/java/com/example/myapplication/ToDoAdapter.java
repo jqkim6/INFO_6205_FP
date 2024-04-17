@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> implements ItemTouchHelperAdapter {
     private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
-    private Context context; // 成员变量
+    private Context context;
     private RecyclerView rv;
     private int highlightedIndex = -1;
     public ToDoAdapter(Context context, ArrayList<ToDoItem> toDoItems) {
@@ -56,8 +57,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     public ArrayList<ToDoItem> getItems(){
         return this.toDoItems;
     }
+    @Override
+    public void onItemDragStarted() {
 
-    // 创建新视图（由布局管理器调用）
+    }
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
@@ -80,7 +83,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 highlightedIndex+=1;
             }
         }
-
+        setInvisibleRecursively(rv);
         notifyItemMoved(fromPosition, toPosition);
     }
 

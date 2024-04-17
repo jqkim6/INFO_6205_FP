@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,10 +10,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public SimpleItemTouchHelperCallback(ItemTouchHelperAdapter adapter) {
         this.adapter = adapter;
     }
-    @Override
-    public boolean isLongPressDragEnabled() {
-        return true;
-    }
+
     @Override
     public boolean isItemViewSwipeEnabled() {
         return false;
@@ -27,6 +26,12 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         adapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         return true;
     }
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+        super.onSelectedChanged(viewHolder, actionState);
+        adapter.onItemDragStarted();
+    }
+
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
     }

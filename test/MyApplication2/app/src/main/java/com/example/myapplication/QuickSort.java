@@ -31,8 +31,29 @@ public class QuickSort {
         arr.set(i, arr.get(j));
         arr.set(j, temp);
     }
+    public static int compare(String o1,String o2){
+        if(o1.equals("Daily")){
+            if (o2.equals("Daily")){
+                return 0;
+            }
+            if(o2.equals("Complete")){
+                return -1;
+            }
+            return 1;
+        }
+        if(o1.equals("Complete")){
+            if (o2.equals("Complete")){
+                return 0;
+            }
+            return 1;
+        }
+        if(o2.equals("Daily")|| o2.equals("Complete")){
+            return -1;
+        }
+        return o1.compareTo(o2);
+    }
     public static int compare(ToDoItem item1, ToDoItem item2) {
-        int result = item1.getDeadline().compareTo(item2.getDeadline());
+        int result = compare(item1.getDeadline(),item2.getDeadline());
         if (result == 0) {
             result = workloadComparator.compare(item1.getWorkload(), item2.getWorkload());
         }

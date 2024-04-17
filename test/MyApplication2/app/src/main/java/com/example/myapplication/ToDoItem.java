@@ -26,6 +26,9 @@ public class ToDoItem extends Item {
             this.deadline="Daily";
         }
     }
+    public void setDeadline(String s){
+        this.deadline=s;
+    }
     public String getTitle() {
         return title;
     }

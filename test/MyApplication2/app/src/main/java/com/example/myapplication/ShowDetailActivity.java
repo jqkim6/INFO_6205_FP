@@ -76,6 +76,14 @@ public class ShowDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button finish=findViewById(R.id.finish);
+        finish.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(ShowDetailActivity.this, FirstActivity.class);
+                ToDoAdapter.getInstance().getItems().get(pos).setDeadline("Complete");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
