@@ -81,6 +81,9 @@ public class ShowDetailActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent = new Intent(ShowDetailActivity.this, FirstActivity.class);
                 ToDoAdapter.getInstance().getItems().get(pos).setDeadline("Complete");
+                if(ToDoAdapter.getInstance().gethilightindex()!=-1){
+                    GetMostIntensive.getMostIntensive();
+                }
                 startActivity(intent);
             }
         });
