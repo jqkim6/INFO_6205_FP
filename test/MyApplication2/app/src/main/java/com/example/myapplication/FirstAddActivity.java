@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.icu.util.TimeZone;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -106,6 +108,12 @@ public class FirstAddActivity extends AppCompatActivity {
                             ((EditText) findViewById(R.id.editTextDeadline)).setText(date);
                         }
                     }, year, month, day);
+            datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                ((EditText) findViewById(R.id.editTextDeadline)).setText("");
+            }
+        });
             datePickerDialog.show();
     }
 
