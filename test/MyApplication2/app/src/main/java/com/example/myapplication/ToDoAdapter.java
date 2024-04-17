@@ -2,6 +2,9 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,9 +104,27 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     @Override
     public void onBindViewHolder(ToDoViewHolder holder, int position) {
         // 绑定数据
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+        drawable.setIntrinsicWidth(18);   // 设置宽度
+        drawable.setIntrinsicHeight(18);  // 设置高度
         ToDoItem item = toDoItems.get(position);
         holder.textView.setText(item.getTitle());
         holder.textView2.setText(item.getDeadline());
+        switch (item.getWorkload()){
+            case "Light":
+                drawable.getPaint().setColor(Color.GREEN);
+                break;
+            case "Medium":
+                drawable.getPaint().setColor(Color.YELLOW);
+                break;
+            case "Heavy":
+                drawable.getPaint().setColor(Color.RED);
+                break;
+            default:
+                drawable.getPaint().setColor(Color.TRANSPARENT);
+                break;
+        }
+        holder.circleView.setBackground(drawable);
         // 设置长按监听器来显示删除按钮
         holder.itemView.setOnLongClickListener(v -> {
             holder.deleteButton.setVisibility(View.VISIBLE);
@@ -188,12 +209,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         // 在这里你声明 item 视图的所有组件
         public TextView textView2;
         public TextView textView;
+        public TextView circleView;
         public Button deleteButton;
         public ToDoViewHolder(View itemView) {
             super(itemView);
             // 这里你初始化视图组件
             textView = itemView.findViewById(R.id.textView_todo_item);
             textView2=itemView.findViewById(R.id.ListShowDeadline);
+            circleView=itemView.findViewById(R.id.circle);
             refreshbutton();
         }
         public void refreshbutton(){

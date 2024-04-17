@@ -39,8 +39,8 @@ public class FirstAddActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Edit Task");
             ToDoItem item=ToDoAdapter.getInstance().getItems().get(getIntent().getIntExtra("POS",0));
             ((TextInputEditText)findViewById(R.id.textInputTitle)).setText(item.getTitle());
-            ((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteCategory)).setText(item.getCategory());
-            ((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteWorkload)).setText(item.getWorkload());
+            ((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteCategory)).setText(item.getCategory(),false);
+            ((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteWorkload)).setText(item.getWorkload(),false);
             ((EditText)findViewById(R.id.editTextDeadline)).setText(item.getDeadline());
         }
         button1.setOnClickListener(new View.OnClickListener() {
