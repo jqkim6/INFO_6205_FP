@@ -15,6 +15,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Objects;
+
 public class ShowDetailActivity extends AppCompatActivity {
 
     @Override
@@ -31,11 +33,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        String text1 = getIntent().getStringExtra("EXTRA_TODO_ITEM_TEXT");
-        // 日志输出
-        Log.d("ShowDetailActivity", "Received text: " + text1);
-
+        int pos=Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("POS")));
         ItemsArrayList<String> task = new ItemsArrayList<>();
 
         // 接收传递过来的数据
@@ -70,7 +68,24 @@ public class ShowDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Task Detail");
+        Button editbutton=findViewById(R.id.Edit);
+        editbutton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowDetailActivity.this, FirstAddActivity.class);
+                intent.putExtra("POS",pos);
+                startActivity(intent);
+            }
+        });
+        Button finish=findViewById(R.id.finish);
+        finish.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(ShowDetailActivity.this, FirstActivity.class);
+                ToDoAdapter.getInstance().getItems().get(pos).setDeadline("Complete");
+                startActivity(intent);
+            }
+        });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // 当向上箭头被点击时，结束当前Activity

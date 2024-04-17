@@ -2,6 +2,10 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -22,7 +27,7 @@ import java.util.List;
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder> implements ItemTouchHelperAdapter {
     private ArrayList<ToDoItem> toDoItems; // 用于存放 ToDo items 的数据列表
     private final static ToDoAdapter inst=new ToDoAdapter(new ArrayList<ToDoItem>());
-    private Context context; // 成员变量
+    private Context context;
     private RecyclerView rv;
     private int highlightedIndex = -1;
     public ToDoAdapter(Context context, ArrayList<ToDoItem> toDoItems) {
@@ -52,8 +57,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
     public ArrayList<ToDoItem> getItems(){
         return this.toDoItems;
     }
+    @Override
+    public void onItemDragStarted() {
 
-    // 创建新视图（由布局管理器调用）
+    }
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
@@ -76,7 +83,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                 highlightedIndex+=1;
             }
         }
-
+        setInvisibleRecursively(rv);
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -92,14 +99,35 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         this.highlightedIndex=i;
         notifyDataSetChanged();
     }
+    public void onlySetHightIndex(int i){
+        this.highlightedIndex=i;
+    }
 
     // 替换视图的内容（由布局管理器调用）
     @Override
     public void onBindViewHolder(ToDoViewHolder holder, int position) {
         // 绑定数据
+        ShapeDrawable drawable = new ShapeDrawable(new OvalShape());
+        drawable.setIntrinsicWidth(18);   // 设置宽度
+        drawable.setIntrinsicHeight(18);  // 设置高度
         ToDoItem item = toDoItems.get(position);
         holder.textView.setText(item.getTitle());
         holder.textView2.setText(item.getDeadline());
+        switch (item.getWorkload()){
+            case "Light":
+                drawable.getPaint().setColor(Color.GREEN);
+                break;
+            case "Medium":
+                drawable.getPaint().setColor(Color.YELLOW);
+                break;
+            case "Heavy":
+                drawable.getPaint().setColor(Color.RED);
+                break;
+            default:
+                drawable.getPaint().setColor(Color.TRANSPARENT);
+                break;
+        }
+        holder.circleView.setBackground(drawable);
         // 设置长按监听器来显示删除按钮
         holder.itemView.setOnLongClickListener(v -> {
             holder.deleteButton.setVisibility(View.VISIBLE);
@@ -125,6 +153,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                     intent.putExtra("EXTRA_DEADLINE", toDoItems.get(adapterPosition).getDeadline());
                     intent.putExtra("EXTRA_WORKLOAD", toDoItems.get(adapterPosition).getWorkload());
                     intent.putExtra("EXTRA_CONTENT", toDoItems.get(adapterPosition).getContent());
+                    intent.putExtra("POS",String.valueOf(adapterPosition));
                     context.startActivity(intent);
                 }
             }
@@ -135,13 +164,18 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
             int adapterPosition = holder.getAdapterPosition(); // 获取当前的位置
 
             if (adapterPosition != RecyclerView.NO_POSITION) {
+                ArrayList<ToDoItem> oldlist=toDoItems;
                 holder.deleteButton.setVisibility(View.GONE);
                 toDoItems.remove(adapterPosition);
                 notifyItemRemoved(adapterPosition);
                 notifyItemRangeChanged(adapterPosition, toDoItems.size());
                 setInvisibleRecursively(this.rv);
                 if(highlightedIndex!=-1) {
-                    GetMostIntensive.getMostIntensive();
+                    int preindex=highlightedIndex;
+                    GetMostIntensive.getMostIntensive(true);
+                    notifyItemChanged(preindex);
+                    notifyItemChanged(highlightedIndex);
+
                 }
             }
         });
@@ -178,12 +212,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
         // 在这里你声明 item 视图的所有组件
         public TextView textView2;
         public TextView textView;
+        public TextView circleView;
         public Button deleteButton;
         public ToDoViewHolder(View itemView) {
             super(itemView);
             // 这里你初始化视图组件
             textView = itemView.findViewById(R.id.textView_todo_item);
             textView2=itemView.findViewById(R.id.ListShowDeadline);
+            circleView=itemView.findViewById(R.id.circle);
             refreshbutton();
         }
         public void refreshbutton(){

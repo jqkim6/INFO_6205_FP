@@ -34,16 +34,25 @@ public class SecondAddActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_second_add);
         Button button1 = (Button) findViewById(R.id.finishButton);
+        if(getIntent().hasExtra("POS")){
+            setSupportActionBar(findViewById(R.id.toolbar4));
+            getSupportActionBar().setTitle("Edit Task");
+            ToDoItem item=ToDoAdapter.getInstance().getItems().get(getIntent().getIntExtra("POS",0));
+            ((TextInputEditText)findViewById(R.id.textInputContent)).setText(item.getContent());
+        }
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String content=((TextInputEditText)findViewById(R.id.textInputContent)).getText().toString();
-                curtask.add(content);
-                ToDoItem newitem=new ToDoItem();
-                //设置新item内容
-                newitem.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
-                //
-                ToDoAdapter.getInstance(getApplicationContext()).addTask(newitem);
+                if(getIntent().hasExtra("POS")){
+                    ToDoItem item=ToDoAdapter.getInstance().getItems().get(getIntent().getIntExtra("POS",0));
+                    item.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
+                }
+                else{
+                    ToDoItem newitem=new ToDoItem();
+                    newitem.setAll(curtask.get(0),content,curtask.get(2),curtask.get(1),curtask.get(3));
+                    ToDoAdapter.getInstance(getApplicationContext()).addTask(newitem);
+                }
                 if(ToDoAdapter.getInstance().gethilightindex()!=-1){
                     GetMostIntensive.getMostIntensive();
                 }
@@ -59,6 +68,9 @@ public class SecondAddActivity extends AppCompatActivity {
         ImageButton button2=findViewById(R.id.imageButton4);
         button2.setOnClickListener(v->{
             Intent inten=new Intent(SecondAddActivity.this, FirstAddActivity.class);
+            if(getIntent().hasExtra("POS")){
+                inten.putExtra("POS",getIntent().getIntExtra("POS",0));
+            }
             startActivity(inten);
         });
     }

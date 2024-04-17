@@ -10,12 +10,9 @@ public class ToDoItem extends Item {
     private String category = "none";
     private String workload = "light";
 
-    // 构造函数用于只有内容的情况
     public ToDoItem(String content) {
         this.content = content;
     }
-
-    // 无参数的构造函数
     public ToDoItem() {}
 
     // 设置所有属性的方法
@@ -29,28 +26,24 @@ public class ToDoItem extends Item {
             this.deadline="Daily";
         }
     }
-
-    // Getters
+    public void setDeadline(String s){
+        this.deadline=s;
+    }
     public String getTitle() {
         return title;
     }
-
     public String getContent() {
         return content;
     }
-
     public String getDeadline() {
         return deadline;
     }
-
     public String getCategory() {
         return category;
     }
-
     public String getWorkload() {
         return workload;
     }
-
     @Override
     public boolean equals(Object obj){
         return this==obj;
