@@ -12,7 +12,6 @@ class ToDoDiffCallback extends DiffUtil.Callback {
         this.oldList = oldList;
         this.newList = newList;
     }
-
     @Override
     public int getOldListSize() {
         return oldList.size();
@@ -28,7 +27,6 @@ class ToDoDiffCallback extends DiffUtil.Callback {
         // Assuming each ToDoItem has a unique ID you can rely on
         return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
     }
-
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         ToDoItem oldItem = oldList.get(oldItemPosition);

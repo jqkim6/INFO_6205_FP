@@ -129,6 +129,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
                     intent.putExtra("EXTRA_DEADLINE", toDoItems.get(adapterPosition).getDeadline());
                     intent.putExtra("EXTRA_WORKLOAD", toDoItems.get(adapterPosition).getWorkload());
                     intent.putExtra("EXTRA_CONTENT", toDoItems.get(adapterPosition).getContent());
+                    intent.putExtra("POS",String.valueOf(adapterPosition));
                     context.startActivity(intent);
                 }
             }

@@ -34,6 +34,15 @@ public class FirstAddActivity extends AppCompatActivity {
         setupWorkloadDropdown();
 
         Button button1 = (Button) findViewById(R.id.nextButton);
+        if(getIntent().hasExtra("POS")){
+            setSupportActionBar(findViewById(R.id.toolbar3));
+            getSupportActionBar().setTitle("Edit Task");
+            ToDoItem item=ToDoAdapter.getInstance().getItems().get(getIntent().getIntExtra("POS",0));
+            ((TextInputEditText)findViewById(R.id.textInputTitle)).setText(item.getTitle());
+            ((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteCategory)).setText(item.getCategory());
+            ((android.widget.AutoCompleteTextView)findViewById(R.id.autoCompleteWorkload)).setText(item.getWorkload());
+            ((EditText)findViewById(R.id.editTextDeadline)).setText(item.getDeadline());
+        }
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +67,9 @@ public class FirstAddActivity extends AppCompatActivity {
                 taskitem.add(workload);
                 Intent intent = new Intent(FirstAddActivity.this, SecondAddActivity.class);
                 intent.putStringArrayListExtra("TaskItem",taskitem);
+                if(getIntent().hasExtra("POS")){
+                    intent.putExtra("POS",getIntent().getIntExtra("POS",-1));
+                }
                 startActivity(intent);
             }
         });

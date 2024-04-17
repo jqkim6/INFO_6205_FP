@@ -29,8 +29,6 @@ import java.util.PriorityQueue;
 
 public class FirstActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private ItemManager itemManager;
-
     @Override
     public void onStop() {
         super.onStop();
@@ -40,10 +38,9 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_layout);
-        itemManager = ItemManager.getInstance(getApplicationContext());
+        ItemManager.getInstance(getApplicationContext());
         FloatingActionButton button1 = findViewById(R.id.floatingActionButton);
         ImageButton button2=findViewById(R.id.imageButton2);
-
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,12 +64,10 @@ public class FirstActivity extends AppCompatActivity {
         ToDoAdapter.getInstance(getApplicationContext()).setRV(recyclerView);
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
         if (animator != null) {
-            animator.setAddDuration(500);    // 设置添加项的动画时间
-            animator.setRemoveDuration(500); // 设置移除项的动画时间
+            animator.setAddDuration(500);
+            animator.setRemoveDuration(500);
         }
-
         recyclerView.setItemAnimator(animator);
-// 设置 ItemTouchHelper
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);

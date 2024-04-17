@@ -9,7 +9,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class TensionComparator  implements Comparator <ToDoItem>{
-
     @Override
     public int compare(ToDoItem o1, ToDoItem o2) {
             HashMap<String, Double> map=new HashMap<>();
