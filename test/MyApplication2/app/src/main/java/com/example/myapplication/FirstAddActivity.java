@@ -1,11 +1,15 @@
 package com.example.myapplication;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -89,18 +93,24 @@ public class FirstAddActivity extends AppCompatActivity {
     }
 
     public void showDatePickerDialog(View view) {
-        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("Select deadline");
-        final MaterialDatePicker<Long> datePicker = builder.build();
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String dateString = formatter.format(new Date(selection));
-            ((EditText) findViewById(R.id.editTextDeadline)).setText(dateString);
-        });
-
-        datePicker.show(getSupportFragmentManager(), "datePicker");
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            // 月份从0开始，所以加1
+                            String date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                            ((EditText) findViewById(R.id.editTextDeadline)).setText(date);
+                        }
+                    }, year, month, day);
+            datePickerDialog.show();
     }
+
+
+
 
     private void setupCategoryDropdown() {
         String[] categories = new String[] {"Education", "Personal", "Work"};
