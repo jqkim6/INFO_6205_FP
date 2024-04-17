@@ -101,14 +101,16 @@ public class FirstActivity extends AppCompatActivity {
                     ArrayList <ToDoItem> items=ToDoAdapter.getInstance(getApplicationContext()).getItems();
                     QuickSort.sort(items,0,items.size()-1);
                     setInvisibleRecursively(findViewById(R.id.recycler_view));
-                    //ToDoAdapter.getInstance().notifyDataSetChanged();
-                    DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ToDoDiffCallback(oldlist, ToDoAdapter.getInstance().getItems()));
-                    diffResult.dispatchUpdatesTo(ToDoAdapter.getInstance());
                     if(cal){
                         GetMostIntensive.getMostIntensive(true);
                     }
+                    //ToDoAdapter.getInstance().notifyDataSetChanged();
+                    DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ToDoDiffCallback(oldlist, ToDoAdapter.getInstance().getItems()));
+                    diffResult.dispatchUpdatesTo(ToDoAdapter.getInstance());
+
                     return true;
                 } else if (item.getItemId() == R.id.action2) {
+                    setInvisibleRecursively(recyclerView);
                     if(ToDoAdapter.getInstance().gethilightindex()!=-1){
                         ToDoAdapter.getInstance().sethilightindex(-1);
                         return true;

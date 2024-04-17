@@ -13,6 +13,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -138,13 +139,18 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewHolder
             int adapterPosition = holder.getAdapterPosition(); // 获取当前的位置
 
             if (adapterPosition != RecyclerView.NO_POSITION) {
+                ArrayList<ToDoItem> oldlist=toDoItems;
                 holder.deleteButton.setVisibility(View.GONE);
                 toDoItems.remove(adapterPosition);
                 notifyItemRemoved(adapterPosition);
                 notifyItemRangeChanged(adapterPosition, toDoItems.size());
                 setInvisibleRecursively(this.rv);
                 if(highlightedIndex!=-1) {
-                    GetMostIntensive.getMostIntensive();
+                    int preindex=highlightedIndex;
+                    GetMostIntensive.getMostIntensive(true);
+                    notifyItemChanged(preindex);
+                    notifyItemChanged(highlightedIndex);
+
                 }
             }
         });
