@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,7 +65,13 @@ public class FirstActivity extends AppCompatActivity {
         ToDoAdapter adapter = ToDoAdapter.getInstance(getApplicationContext());
         recyclerView.setAdapter(adapter);
         ToDoAdapter.getInstance(getApplicationContext()).setRV(recyclerView);
+        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        if (animator != null) {
+            animator.setAddDuration(500);    // 设置添加项的动画时间
+            animator.setRemoveDuration(500); // 设置移除项的动画时间
+        }
 
+        recyclerView.setItemAnimator(animator);
 // 设置 ItemTouchHelper
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
@@ -89,14 +96,17 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action1) {
+                    ArrayList<ToDoItem> oldlist=new ArrayList<>(ToDoAdapter.getInstance().getItems());
                     boolean cal= ToDoAdapter.getInstance().gethilightindex() != -1;
                     ArrayList <ToDoItem> items=ToDoAdapter.getInstance(getApplicationContext()).getItems();
                     QuickSort.sort(items,0,items.size()-1);
                     setInvisibleRecursively(findViewById(R.id.recycler_view));
-                    ToDoAdapter.getInstance().notifyDataSetChanged();
+                    //ToDoAdapter.getInstance().notifyDataSetChanged();
                     if(cal){
                         GetMostIntensive.getMostIntensive();
                     }
+                    DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ToDoDiffCallback(oldlist, ToDoAdapter.getInstance().getItems()));
+                    diffResult.dispatchUpdatesTo(ToDoAdapter.getInstance());
                     return true;
                 } else if (item.getItemId() == R.id.action2) {
                     if(ToDoAdapter.getInstance().gethilightindex()!=-1){
