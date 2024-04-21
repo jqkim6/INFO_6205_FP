@@ -12,8 +12,6 @@ Welcome to the Task Tracker App for Android! This README provides you with all t
   - [Sorting Tasks](#sorting-tasks)
   - [Viewing Task Details](#viewing-task-details)
   - [Highlighting Urgent Tasks](#highlighting-urgent-tasks)
-- [Feedback](#feedback)
-- [Support](#support)
 - [License](#license)
 
 ## Introduction
