@@ -6,7 +6,6 @@ Welcome to the Task Tracker App for Android! This README provides you with all t
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
-- [Installation](#installation)
 - [Usage](#usage)
   - [Getting Started](#getting-started)
   - [Adding a Task](#adding-a-task)
