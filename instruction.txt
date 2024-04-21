@@ -1,0 +1,49 @@
+A. Install Android Studio:
+
+Windows
+1. Download the Installation File:
+	Visit the official Android Studio website: https://developer.android.com/studio, to download "Android Studio Iguana | 2023.2.1 Patch 2".
+	Click on the "Download Android Studio lguana" button, agree to the terms of service, and then download the installer.
+2. Run the Installer:
+	Open the downloaded .exe file to start the installation.
+	Follow the steps in the installation wizard, selecting the installation path.
+	Choose the components you wish to install (it's usually recommended to install all default components).
+3. Configure the Environment:
+	After installation, run Android Studio.
+	It will prompt you to import settings 
+	The setup wizard will help you download all necessary Android SDK components.
+
+macOS
+1. Download the Installation File:
+	Visit the Android Studio official website, https://developer.android.com/studio,  to download "Android Studio Iguana | 2023.2.1 Patch 1".
+	Download the version for macOS.
+2. Install Android Studio:
+	Open the downloaded .dmg file.
+	Drag Android Studio into your Applications folder.
+3. Run Android Studio:
+	Open the Applications folder and click on Android Studio.
+	Follow the startup wizard to complete the installation.
+3. Download Required SDK Components:
+	The setup wizard will assist you in setting up the Android SDK and other development tools.
+
+B. Opening the Project:
+1. Open an Existing Project:
+	On the Android Studio welcome screen, select “Open an existing Android Studio project.”
+	If Android Studio is already open, you can open a project by clicking on File > Open… in the menu bar.
+2. Select the Project Folder:
+	Navigate to the folder containing our project, select the root directory of the project (which is "MyApplication2" folder under the "test" folder), and click “OK”.
+	Configuring the Project
+	Wait for Android Studio to Index and Build the Project:
+	When you open a project for the first time, Android Studio will index it and attempt to build the project automatically. This may take some time, depending on the size and complexity of your project.
+3. Check and Install Missing SDKs and Tools:
+	If the project requires specific versions of the Android SDK or other dependencies that you do not have installed, Android Studio will prompt you to install them.
+4. Set Up a Virtual Device or Connect a Physical Device:
+	You'll need to configure an Android Virtual Device (AVD). In Android Studio, you can create and manage your virtual devices via Tools > Device Manager.
+
+C. Running the Project:
+1. Select a Run/Debug Configuration:
+	From the toolbar's run menu, you can select a pre-configured device or create a new one.
+2. Run the Application:
+	Click on the "Sync Project with Gradle Files" button in the toolbar which is at the top of right. This button typically looks like a refresh icon or can be accessed via File > Sync Project with Gradle Files.
+	Click the green play button (Run) on the toolbar, or use the shortcut Shift + F10 (on Windows/Linux) or Ctrl + R (on macOS) to start the application.
+	Android Studio will build the application and deploy it to the selected device.
