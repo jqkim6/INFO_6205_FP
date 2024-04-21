@@ -26,7 +26,10 @@ macOS
 3. Download Required SDK Components:
 	The setup wizard will assist you in setting up the Android SDK and other development tools.
 
-B. Opening the Project:
+For running the App you can either run the dev version (gradle project) or directly install the release apk on your android device.
+
+Running gradle project
+I. Opening the Project:
 1. Open an Existing Project:
 	On the Android Studio welcome screen, select “Open an existing Android Studio project.”
 	If Android Studio is already open, you can open a project by clicking on File > Open… in the menu bar.
@@ -39,11 +42,13 @@ B. Opening the Project:
 	If the project requires specific versions of the Android SDK or other dependencies that you do not have installed, Android Studio will prompt you to install them.
 4. Set Up a Virtual Device or Connect a Physical Device:
 	You'll need to configure an Android Virtual Device (AVD). In Android Studio, you can create and manage your virtual devices via Tools > Device Manager.
-
-C. Running the Project:
+II. Running the Project:
 1. Select a Run/Debug Configuration:
 	From the toolbar's run menu, you can select a pre-configured device or create a new one.
 2. Run the Application:
 	Click on the "Sync Project with Gradle Files" button in the toolbar which is at the top of right. This button typically looks like a refresh icon or can be accessed via File > Sync Project with Gradle Files.
 	Click the green play button (Run) on the toolbar, or use the shortcut Shift + F10 (on Windows/Linux) or Ctrl + R (on macOS) to start the application.
 	Android Studio will build the application and deploy it to the selected device.
+
+Running the release apk
+go to MyApplication2/app/release you will find app-release.apk. Directly install it on virtual machine or your Android device you can get start with the App.
